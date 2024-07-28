@@ -21,8 +21,12 @@ public class CampaignController {
     }
 
     @PostMapping
-    public ResponseEntity<CampaignDTO> createCampaign(@RequestBody CampaignDTO campaignDTO) {
-           return ResponseEntity.ok(campaignService.createCampaign(campaignDTO));
+    public ResponseEntity<?> createCampaign(@RequestBody CampaignDTO campaignDTO) {
+        try {
+            return ResponseEntity.ok(campaignService.createCampaign(campaignDTO));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/client/{clientId}")
