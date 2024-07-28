@@ -17,5 +17,4 @@ public class CampaignDTO {
     private List<String> subscribers;
     private String client_eMail;
     private Long client_id;
-
 }

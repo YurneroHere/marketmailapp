@@ -6,4 +6,5 @@ import java.util.List;
 public interface ClientService {
      ClientDTO createClient(ClientDTO clientDTO);
      List<ClientDTO> getAllClients();
+
 }

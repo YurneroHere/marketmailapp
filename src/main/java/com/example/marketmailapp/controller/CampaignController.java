@@ -31,13 +31,18 @@ public class CampaignController {
     }
 
     @PostMapping("/send/{campaignId}")
-    public ResponseEntity<Void> sendCampaign(@PathVariable Long campaignId) {
+    public ResponseEntity<?> sendCampaign(@PathVariable Long campaignId) {
         if(requestCacheService.isDuplicate(campaignId)){
             return ResponseEntity.badRequest().build();
         }
+        try{
         requestCacheService.store(campaignId, "Already in Process");
-        campaignService.sendCampaignMail(campaignId);
-        requestCacheService.removeResponse(campaignId);
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok(campaignService.sendCampaignMail(campaignId));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        finally {
+            requestCacheService.removeResponse(campaignId);
+        }
     }
 }

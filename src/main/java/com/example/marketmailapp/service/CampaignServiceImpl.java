@@ -8,6 +8,7 @@ import com.example.marketmailapp.model.Campaign;
 import com.example.marketmailapp.repository.CampaignRepository;
 import com.example.marketmailapp.utils.EmailService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,16 +22,29 @@ public class CampaignServiceImpl implements CampaignService{
     private final EmailService emailService;
 
 
+
     public CampaignServiceImpl(CampaignRepository campaignRepository, CampaignMapper campaignMapper, EmailService emailService) {
         this.campaignRepository = campaignRepository;
         this.campaignMapper = campaignMapper;
         this.emailService = emailService;
     }
+    public void deleteById(Long id) {
+        campaignRepository.deleteById(id);
+    }
 
+
+    public CampaignDTO getById(Long id) {
+        Campaign campaign = campaignRepository.findById(id).orElse(null);
+        return campaignMapper.campaignToCampaignDTO(campaign);
+    }
 
     public CampaignDTO createCampaign(CampaignDTO campaignDTO) {
+        if(emailService.validateEmailsIds(campaignDTO.getSubscribers(),
+                campaignDTO.getClient_eMail())){
         Campaign campaign = campaignMapper.campaignDTOToCampaign(campaignDTO);
         return campaignMapper.campaignToCampaignDTO(campaignRepository.save(campaign));
+        }
+        throw new RuntimeException("invalid email ids");
     }
 
     public List<CampaignDTO> getCampaignsByClientId(Long clientId) {
@@ -39,7 +53,7 @@ public class CampaignServiceImpl implements CampaignService{
                 .collect(Collectors.toList());
     }
 
-    public void sendCampaignMail(Long campaignId) {
+    public String sendCampaignMail(Long campaignId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new RuntimeException("Campaign not found"));
 
@@ -51,10 +65,15 @@ public class CampaignServiceImpl implements CampaignService{
                                         campaignDTO.getSubject(),
                                         campaignDTO.getEmailBody());
 
-        emailService.sendEmail(emailDTO);
+        if(!emailService.sendEmail(emailDTO).equals(MailStatus.SENT.toString()))
+            throw new RuntimeException("Email not sent");
+
         // Mock sending email logic
         campaignDTO.setStatus(MailStatus.SENT);
         campaign = campaignMapper.campaignDTOToCampaign(campaignDTO);
         campaignRepository.save(campaign);
+        return "Email sent";
     }
+
+
 }

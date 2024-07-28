@@ -30,4 +30,6 @@ public class ClientServiceImpl implements ClientService {
                 .map(clientMapper::clientToClientDTO)
                 .collect(Collectors.toList());
     }
+
+
 }

@@ -17,9 +17,11 @@ public class Campaign {
     private String name;
     private String subject;
     private String emailBody;
+
+    @Enumerated(EnumType.STRING)
     private MailStatus status = MailStatus.NONE; // e.g., CREATED, SENT
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> subscribers;
 
     @ManyToOne

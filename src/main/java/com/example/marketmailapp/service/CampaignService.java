@@ -10,5 +10,9 @@ public interface CampaignService {
 
      List<CampaignDTO> getCampaignsByClientId(Long clientId);
 
-     void sendCampaignMail(Long campaignId);
+     String sendCampaignMail(Long campaignId);
+
+     void deleteById(Long id);
+
+     CampaignDTO getById(Long id);
 }
