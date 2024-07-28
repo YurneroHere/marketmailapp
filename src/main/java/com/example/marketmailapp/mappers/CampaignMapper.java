@@ -4,7 +4,6 @@ import com.example.marketmailapp.dto.CampaignDTO;
 import com.example.marketmailapp.model.Campaign;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CampaignMapper {
