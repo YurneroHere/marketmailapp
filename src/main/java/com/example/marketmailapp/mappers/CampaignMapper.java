@@ -5,6 +5,8 @@ import com.example.marketmailapp.model.Campaign;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CampaignMapper {
 
@@ -14,4 +16,6 @@ public interface CampaignMapper {
     @Mapping(source = "client_id", target = "client.id")
     //@InheritInverseConfiguration
     Campaign campaignDTOToCampaign(CampaignDTO campaignDTO);
+
+    List<CampaignDTO> campaignsToCampaignDTOs(List<Campaign> campaigns);
 }

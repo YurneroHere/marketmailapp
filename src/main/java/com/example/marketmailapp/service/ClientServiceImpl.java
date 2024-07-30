@@ -31,5 +31,14 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
     }
 
-
+    public List<ClientDTO> getDistinctClients() {
+        return clientRepository.findAllDistinctClients().stream()
+                .map(singleClient -> {
+                    ClientDTO clientDTO = new ClientDTO();
+                    clientDTO.setName(singleClient[0].toString());
+                    clientDTO.setEmail(singleClient[1].toString());
+                    return clientDTO;
+                } )
+                .collect(Collectors.toList());
+    }
 }

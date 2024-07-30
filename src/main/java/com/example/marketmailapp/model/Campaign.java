@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.concurrent.Flow;
 
 @Entity
 @Getter
@@ -24,8 +25,9 @@ public class Campaign {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> subscribers;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "client_id")
     private Client client;
+
     // Getters and Setters
 }

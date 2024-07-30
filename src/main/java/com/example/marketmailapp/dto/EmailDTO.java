@@ -7,6 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
+
 public class EmailDTO {
     private String from;
     private List<String> to;

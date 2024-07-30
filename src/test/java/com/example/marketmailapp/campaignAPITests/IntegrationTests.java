@@ -29,9 +29,6 @@ public class IntegrationTests {
     private MockMvc mockMvc;
 
     @Autowired
-    private CampaignRepository campaignRepository;
-
-    @Autowired
     private CampaignService campaignService;
 
     @Autowired

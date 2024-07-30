@@ -28,6 +28,7 @@ public class CampaignServiceImpl implements CampaignService{
         this.campaignMapper = campaignMapper;
         this.emailService = emailService;
     }
+
     public void deleteById(Long id) {
         campaignRepository.deleteById(id);
     }
@@ -46,6 +47,8 @@ public class CampaignServiceImpl implements CampaignService{
         }
         throw new RuntimeException("invalid email ids");
     }
+
+
 
     public List<CampaignDTO> getCampaignsByClientId(Long clientId) {
         return campaignRepository.findByClientId(clientId).stream()
@@ -74,6 +77,4 @@ public class CampaignServiceImpl implements CampaignService{
         campaignRepository.save(campaign);
         return "Email sent";
     }
-
-
 }
