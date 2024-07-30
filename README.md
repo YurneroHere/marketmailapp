@@ -39,5 +39,25 @@ curl --location --request POST 'http://localhost:8080/api/campaigns/send/15'
 Response:
 Email sent
 
+4) get Distinct clients 
+curl --location 'http://localhost:8080/api/clients/client' \
+   --data ''
+Response :
+   [
+   {
+   "id": null,
+   "name": "Vegeta",
+   "email": "dbz@gmail.com",
+   "campaigns": null
+   },
+   {
+   "id": null,
+   "name": "goku",
+   "email": "szya@asd.com",
+   "campaigns": null
+   }
+   ]
+
+
 
 
